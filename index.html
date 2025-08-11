@@ -101,32 +101,129 @@
 <div class="overlay">
   <div class="modal">
       <h2>猫聊下载</h2>
-
-      <!-- 把 href 换成真实的下载地址即可 -->
-      <a class="btn ios"   href="ios.html"><i class="fab fa-apple"></i> iOS 版</a>
-      <a class="btn win"   href="windows.html"><i class="fab fa-windows"></i> Windows 版</a>
-      <a class="btn ios2"  href="android.html"><i class="fab fa-apple"></i>安卓 版</a>
-      <a class="btn web"   href="windows.html"><i class="fas fa-globe"></i> 浏览器版</a>
+      <div id="platform-recommendation" class="platform-info"></div>
+      
+      <div id="recommended-download"></div>
+      
+      <h3 id="other-versions" style="margin-top: 30px; margin-bottom: 15px; font-size: 18px; color: #555;">其他版本</h3>
+      <div id="other-downloads"></div>
   </div>
 </div>
 
 <script>
-// 检测设备类型并设置相应的背景图
-function setBackgroundBasedOnDevice() {
-    // 检查是否为移动设备
-    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+// 检测设备类型并设置相应的背景图和下载推荐
+function detectPlatformAndSetup() {
+    // 定义平台检测正则表达式
+    const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+    const isAndroid = /Android/i.test(navigator.userAgent);
+    const isWindows = /Windows NT/i.test(navigator.userAgent);
+    const isMacOS = /Macintosh/i.test(navigator.userAgent) && !isIOS;
+    const isMobile = isIOS || isAndroid;
     
+    // 设置背景图
     if (isMobile) {
-        // 移动设备使用手机背景
         document.body.style.backgroundImage = "url('https://api.imlazy.ink/img-phone')";
     } else {
-        // 桌面设备使用桌面背景
         document.body.style.backgroundImage = "url('https://api.imlazy.ink/img')";
+    }
+    
+    // 创建所有下载按钮
+    const allDownloads = {
+        ios: {
+            name: "iOS 版",
+            icon: "fab fa-apple",
+            url: "ios.html",
+            class: "ios",
+            supported: isIOS
+        },
+        android: {
+            name: "安卓版",
+            icon: "fab fa-android",
+            url: "android.html",
+            class: "ios2",
+            supported: isAndroid
+        },
+        windows: {
+            name: "Windows 版",
+            icon: "fab fa-windows",
+            url: "windows.html",
+            class: "win",
+            supported: isWindows
+        },
+        web: {
+            name: "浏览器版",
+            icon: "fas fa-globe",
+            url: "web.html",
+            class: "web",
+            supported: true // 浏览器版本总是支持的
+        }
+    };
+    
+    // 设置平台推荐信息
+    const platformInfoElement = document.getElementById('platform-recommendation');
+    const recommendedDownloadElement = document.getElementById('recommended-download');
+    const otherDownloadsElement = document.getElementById('other-downloads');
+    
+    // 确定当前平台和推荐下载
+    let currentPlatform = "未知设备";
+    let supportStatus = "不支持";
+    let recommendedApp = "web";
+    
+    if (isIOS) {
+        currentPlatform = "iOS";
+        supportStatus = "支持";
+        recommendedApp = "ios";
+    } else if (isAndroid) {
+        currentPlatform = "安卓";
+        supportStatus = "支持";
+        recommendedApp = "android";
+    } else if (isWindows) {
+        currentPlatform = "Windows";
+        supportStatus = "支持";
+        recommendedApp = "windows";
+    } else if (isMacOS) {
+        currentPlatform = "macOS";
+        supportStatus = "不支持";
+        recommendedApp = "web";
+    }
+    
+    // 设置平台信息文本
+    platformInfoElement.innerHTML = `当前你的平台 <strong>${currentPlatform}</strong> ${supportStatus}猫聊APP版本，推荐使用<strong>${allDownloads[recommendedApp].name}</strong>`;
+    platformInfoElement.style.marginBottom = "25px";
+    platformInfoElement.style.lineHeight = "1.5";
+    platformInfoElement.style.color = "#333";
+    
+    // 添加推荐下载按钮
+    const recommendedButton = createDownloadButton(allDownloads[recommendedApp]);
+    recommendedDownloadElement.appendChild(recommendedButton);
+    
+    // 添加其他下载按钮
+    for (const key in allDownloads) {
+        if (key !== recommendedApp) {
+            const button = createDownloadButton(allDownloads[key]);
+            otherDownloadsElement.appendChild(button);
+        }
     }
 }
 
+// 创建下载按钮
+function createDownloadButton(downloadInfo) {
+    const button = document.createElement('a');
+    button.href = downloadInfo.url;
+    button.className = `btn ${downloadInfo.class}`;
+    
+    const icon = document.createElement('i');
+    icon.className = downloadInfo.icon;
+    button.appendChild(icon);
+    
+    const text = document.createTextNode(` ${downloadInfo.name}`);
+    button.appendChild(text);
+    
+    return button;
+}
+
 // 页面加载完成后执行
-document.addEventListener('DOMContentLoaded', setBackgroundBasedOnDevice);
+document.addEventListener('DOMContentLoaded', detectPlatformAndSetup);
 </script>
 </body>
 </html>
