@@ -2,13 +2,17 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>下载中心</title>
 <link rel="stylesheet" href="https://cdn.jsdmirror.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 <style>
     body{
         margin:0;
         padding:0;
-        background:linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        background-image: url('https://api.imlazy.ink/img');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
         font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif;
         display:flex;
         align-items:center;
@@ -26,7 +30,8 @@
         backdrop-filter:blur(5px);
     }
     .modal{
-        background:#fff;
+        background:rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(10px);
         border-radius:20px;
         padding:40px 48px;
         text-align:center;
@@ -106,5 +111,23 @@
   </div>
 </div>
 
+<script>
+// 检测设备类型并设置相应的背景图
+function setBackgroundBasedOnDevice() {
+    // 检查是否为移动设备
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    
+    if (isMobile) {
+        // 移动设备使用手机背景
+        document.body.style.backgroundImage = "url('https://api.imlazy.ink/img-phone')";
+    } else {
+        // 桌面设备使用桌面背景
+        document.body.style.backgroundImage = "url('https://api.imlazy.ink/img')";
+    }
+}
+
+// 页面加载完成后执行
+document.addEventListener('DOMContentLoaded', setBackgroundBasedOnDevice);
+</script>
 </body>
 </html>
