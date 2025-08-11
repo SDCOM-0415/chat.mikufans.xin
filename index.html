@@ -118,6 +118,7 @@ function detectPlatformAndSetup() {
     const isAndroid = /Android/i.test(navigator.userAgent);
     const isWindows = /Windows NT/i.test(navigator.userAgent);
     const isMacOS = /Macintosh/i.test(navigator.userAgent) && !isIOS;
+    const isLinux = /Linux/i.test(navigator.userAgent) && !isAndroid;
     const isMobile = isIOS || isAndroid;
     
     // 设置背景图
@@ -183,6 +184,10 @@ function detectPlatformAndSetup() {
         recommendedApp = "windows";
     } else if (isMacOS) {
         currentPlatform = "macOS";
+        supportStatus = "不支持";
+        recommendedApp = "web";
+    } else if (isLinux) {
+        currentPlatform = "Linux";
         supportStatus = "不支持";
         recommendedApp = "web";
     }
