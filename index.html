@@ -4,6 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>猫聊下载中心</title>
+<link rel="icon" href="cat.jpg" type="image/jpeg">
 <link rel="stylesheet" href="https://cdn.jsdmirror.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 <style>
     body{
@@ -100,7 +101,7 @@
 <!-- 弹窗 -->
 <div class="overlay">
   <div class="modal">
-      <h2>猫聊下载</h2>
+      <h2>猫聊下载中心</h2>
       <div id="platform-recommendation" class="platform-info"></div>
       
       <div id="recommended-download"></div>
@@ -130,13 +131,6 @@ function detectPlatformAndSetup() {
     
     // 创建所有下载按钮
     const allDownloads = {
-        ios: {
-            name: "iOS 版",
-            icon: "fab fa-apple",
-            url: "ios.html",
-            class: "ios",
-            supported: isIOS
-        },
         android: {
             name: "安卓版",
             icon: "fab fa-android",
@@ -151,12 +145,19 @@ function detectPlatformAndSetup() {
             class: "win",
             supported: isWindows
         },
-        web: {
-            name: "浏览器版",
+        webMain: {
+            name: "网页版（ESA主线）",
             icon: "fas fa-globe",
-            url: "web.html",
+            url: "https://web.chat.mikufans.xin",
             class: "web",
             supported: true // 浏览器版本总是支持的
+        },
+        webBackup: {
+            name: "网页版（EO备线）",
+            icon: "fas fa-globe",
+            url: "https://web.chat-eo.mikufans.xin",
+            class: "web",
+            supported: true
         }
     };
     
@@ -168,12 +169,12 @@ function detectPlatformAndSetup() {
     // 确定当前平台和推荐下载
     let currentPlatform = "未知设备";
     let supportStatus = "不支持";
-    let recommendedApp = "web";
+    let recommendedApp = "webMain";
     
     if (isIOS) {
         currentPlatform = "iOS";
-        supportStatus = "支持";
-        recommendedApp = "ios";
+        supportStatus = "不支持";
+        recommendedApp = "webMain";
     } else if (isAndroid) {
         currentPlatform = "安卓";
         supportStatus = "支持";
@@ -185,11 +186,11 @@ function detectPlatformAndSetup() {
     } else if (isMacOS) {
         currentPlatform = "macOS";
         supportStatus = "不支持";
-        recommendedApp = "web";
+        recommendedApp = "webMain";
     } else if (isLinux) {
         currentPlatform = "Linux";
         supportStatus = "不支持";
-        recommendedApp = "web";
+        recommendedApp = "webMain";
     }
     
     // 设置平台信息文本
