@@ -3,18 +3,92 @@
 <head>
 <meta charset="UTF-8" />
 <title>下载中心</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdmirror.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 <style>
-    body{margin:0;padding:0;background:#fff;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;}
-    .overlay{position:fixed;inset:0;background:rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;z-index:999;}
-    .modal{background:#fff;border-radius:16px;padding:40px 48px;text-align:center;box-shadow:0 12px 28px rgba(0,0,0,.2);max-width:320px;width:90%;}
-    .modal h2{margin:0 0 24px;font-size:22px;font-weight:600;color:#333;}
-    .btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;margin:10px 0;padding:12px 0;border:none;border-radius:10px;font-size:16px;cursor:pointer;text-decoration:none;color:#fff;}
-    .ios   {background:#007aff;}
-    .win   {background:#0078d4;}
-    .ios2  {background:#34c759;}
-    .web   {background:#5ac8fa;}
-    .btn:hover{opacity:.9;}
+    body{
+        margin:0;
+        padding:0;
+        background:linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        height:100vh;
+    }
+    .overlay{
+        position:fixed;
+        inset:0;
+        background:rgba(0,0,0,.5);
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        z-index:999;
+        backdrop-filter:blur(5px);
+    }
+    .modal{
+        background:#fff;
+        border-radius:20px;
+        padding:40px 48px;
+        text-align:center;
+        box-shadow:0 20px 40px rgba(0,0,0,.2);
+        max-width:340px;
+        width:90%;
+        animation:fadeIn 0.5s ease-out;
+    }
+    @keyframes fadeIn {
+        from {opacity:0; transform:translateY(-20px);}
+        to {opacity:1; transform:translateY(0);}
+    }
+    .modal h2{
+        margin:0 0 30px;
+        font-size:24px;
+        font-weight:600;
+        color:#333;
+        position:relative;
+    }
+    .modal h2:after {
+        content:'';
+        position:absolute;
+        bottom:-10px;
+        left:50%;
+        transform:translateX(-50%);
+        width:60px;
+        height:3px;
+        background:linear-gradient(90deg, #007aff, #5ac8fa);
+        border-radius:3px;
+    }
+    .btn{
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        gap:12px;
+        width:100%;
+        margin:16px 0;
+        padding:14px 0;
+        border:none;
+        border-radius:12px;
+        font-size:16px;
+        font-weight:500;
+        cursor:pointer;
+        text-decoration:none;
+        color:#fff;
+        transition:all 0.3s ease;
+        box-shadow:0 4px 10px rgba(0,0,0,0.1);
+    }
+    .ios   {background:linear-gradient(135deg, #007aff 0%, #5856d6 100%);}
+    .win   {background:linear-gradient(135deg, #0078d4 0%, #00a2ed 100%);}
+    .ios2  {background:linear-gradient(135deg, #34c759 0%, #30d158 100%);}
+    .web   {background:linear-gradient(135deg, #5ac8fa 0%, #64d2ff 100%);}
+    .btn:hover{
+        transform:translateY(-3px);
+        box-shadow:0 7px 14px rgba(0,0,0,0.15);
+    }
+    .btn:active{
+        transform:translateY(0);
+    }
+    .btn i {
+        font-size:18px;
+    }
 </style>
 </head>
 <body>
